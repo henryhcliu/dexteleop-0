@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="title" content="DexTeleop-0: Force-Aware Bimanual Dexterous Teleoperation">
+  <meta name="description" content="DexTeleop-0 adds tactile force-aware shared autonomy to egocentric bimanual dexterous teleoperation for safer, higher-success contact-rich manipulation.">
+  <meta name="keywords" content="dexterous manipulation, teleoperation, tactile sensing, shared autonomy, robotics, bimanual manipulation">
+  <meta name="author" content="Haichao Liu, Yuyao Jiang, Hyunsun Park, Yuanjiang Xue, Ziwei Wang">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="DexTeleop-0">
+  <meta property="og:title" content="DexTeleop-0: Force-Aware Bimanual Dexterous Teleoperation with Ego-Centric Perception towards Shared Autonomy">
+  <meta property="og:description" content="A tactile-driven adaptation strategy for translating coarse egocentric tracking intents into precise, force-compliant bimanual dexterous robot commands.">
+  <meta property="og:url" content="https://henryhcliu.github.io/dexteleop-0">
+  <meta property="og:image" content="https://henryhcliu.github.io/dexteleop-0/static/images/paper/fig2_refine.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DexTeleop-0">
+  <meta name="twitter:description" content="Force-aware bimanual dexterous teleoperation with egocentric perception and tactile shared autonomy.">
+  <meta name="twitter:image" content="https://henryhcliu.github.io/dexteleop-0/static/images/paper/fig2_refine.jpg">
+  <meta name="citation_title" content="DexTeleop-0: Force-Aware Bimanual Dexterous Teleoperation with Ego-Centric Perception towards Shared Autonomy">
+  <meta name="citation_author" content="Liu, Haichao">
+  <meta name="citation_author" content="Jiang, Yuyao">
+  <meta name="citation_author" content="Park, Hyunsun">
+  <meta name="citation_author" content="Xue, Yuanjiang">
+  <meta name="citation_author" content="Wang, Ziwei">
+  <meta name="citation_publication_date" content="2026/06/22">
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2606.23431">
+  <meta name="theme-color" content="#12333a">
+
+  <title>DexTeleop-0 | Force-Aware Bimanual Dexterous Teleoperation</title>
+  <link rel="icon" type="image/png" href="static/images/ntu_logo.png">
+  <link rel="apple-touch-icon" href="static/images/ntu_logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "DexTeleop-0: Force-Aware Bimanual Dexterous Teleoperation with Ego-Centric Perception towards Shared Autonomy",
+    "datePublished": "2026-06-22",
+    "url": "https://henryhcliu.github.io/dexteleop-0",
+    "sameAs": "https://arxiv.org/abs/2606.23431",
+    "author": [
+      {"@type": "Person", "name": "Haichao Liu"},
+      {"@type": "Person", "name": "Yuyao Jiang"},
+      {"@type": "Person", "name": "Hyunsun Park"},
+      {"@type": "Person", "name": "Yuanjiang Xue"},
+      {"@type": "Person", "name": "Ziwei Wang"}
+    ],
+    "publisher": {"@type": "Organization", "name": "arXiv"},
+    "keywords": ["robotics", "dexterous manipulation", "teleoperation", "tactile sensing", "shared autonomy"],
+    "isAccessibleForFree": true
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <button class="scroll-to-top" type="button" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <header class="site-hero">
+    <nav class="topbar" aria-label="Page navigation">
+      <a class="brand" href="#">DexTeleop-0</a>
+      <div class="nav-links">
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#video">Video</a>
+        <a href="#citation">Citation</a>
+      </div>
+    </nav>
+
+    <section class="hero-content">
+      <p class="eyebrow">arXiv 2026 · Robotics</p>
+      <h1>DexTeleop-0: Force-Aware Bimanual Dexterous Teleoperation with Ego-Centric Perception towards Shared Autonomy</h1>
+      <div class="authors">
+        <span>Haichao Liu<sup>1</sup></span>
+        <span>Yuyao Jiang<sup>1</sup></span>
+        <span>Hyunsun Park<sup>2</sup></span>
+        <span>Yuanjiang Xue<sup>1</sup></span>
+        <span>Ziwei Wang<sup>1,†</sup></span>
+      </div>
+      <p class="affiliations"><sup>1</sup>Nanyang Technological University, Singapore · <sup>2</sup>OOJU, USA · <sup>†</sup>Corresponding author</p>
+      <div class="hero-actions" aria-label="Project links">
+        <a class="button primary" href="https://arxiv.org/pdf/2606.23431" target="_blank" rel="noopener">
+          <i class="fas fa-file-pdf"></i><span>Paper</span>
+        </a>
+        <a class="button" href="https://arxiv.org/abs/2606.23431" target="_blank" rel="noopener">
+          <i class="fas fa-graduation-cap"></i><span>arXiv</span>
+        </a>
+        <a class="button disabled" href="#" aria-disabled="true">
+          <i class="fab fa-github"></i><span>Code Coming Soon</span>
+        </a>
+        <a class="button" href="#citation">
+          <i class="fas fa-quote-right"></i><span>BibTeX</span>
+        </a>
+      </div>
+    </section>
+
+    <figure class="hero-media">
+      <img src="static/images/paper/fig2_refine.jpg" alt="DexTeleop-0 system architecture with egocentric perception, retargeting, tactile force balance, and robot execution." fetchpriority="high">
+      <figcaption>DexTeleop-0 turns egocentric tracking into force-aware robot actions through real-time tactile residual optimization.</figcaption>
+    </figure>
+  </header>
+
+  <main id="main">
+    <section class="section abstract-section" id="abstract">
+      <div class="section-heading">
+        <p class="eyebrow">Overview</p>
+        <h2>Abstract</h2>
+      </div>
+      <div class="abstract-grid">
+        <div class="abstract-copy">
+          <p>Fine-grained, bimanual dexterous manipulation remains a foundational challenge in robotics. Traditional teleoperation systems often fail in contact-rich tasks because embodiment gaps hinder accurate kinematic mapping, while tactile and force feedback remain absent. DexTeleop-0 introduces a tactile-driven adaptation strategy that translates coarse human tracking intents into precise, force-compliant robotic commands with tactile sensing.</p>
+          <p>By estimating contact points and leveraging a tactile-enabled fingertip force-sensing profile, the system dynamically computes localized corrections using operational space Jacobians. Across simulation and real-world hardware, DexTeleop-0 improves task success rates and execution efficiency in robust grasping, disturbance-resilient manipulation, and complex dexterous tasks.</p>
+        </div>
+        <div class="contribution-grid" aria-label="Key contributions">
+          <article>
+            <i class="fas fa-hand-paper"></i>
+            <h3>Tactile Shared Autonomy</h3>
+            <p>Force-aware adaptation explicitly bridges the control and interaction gap during physical contact.</p>
+          </article>
+          <article>
+            <i class="fas fa-wave-square"></i>
+            <h3>Contact-Rich Modeling</h3>
+            <p>Visual-tactile feedback is closed through contact force sensing and predictive interaction modeling.</p>
+          </article>
+          <article>
+            <i class="fas fa-vr-cardboard"></i>
+            <h3>Egocentric Teleoperation</h3>
+            <p>A lightweight, hardware-agnostic stack maps VR hand and wrist tracking into coordinated bimanual commands.</p>
+          </article>
+          <article>
+            <i class="fas fa-chart-line"></i>
+            <h3>Sim and Real Validation</h3>
+            <p>The full-stack system is validated on aligned IsaacSim and physical dual-arm dexterous platforms.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section principle-section">
+      <div class="split">
+        <div>
+          <p class="eyebrow">Core Intuition</p>
+          <h2>Force balancing corrects unstable contact before it becomes failure.</h2>
+          <p>Vision-only teleoperation captures human intent, but it cannot directly sense pressure, slip, or local force imbalance. DexTeleop-0 keeps the operator's command as the nominal trajectory while adding small tactile residual corrections that restore stable contact geometry.</p>
+        </div>
+        <figure class="framed-figure">
+          <img src="static/images/paper/fig1_ud.jpg" alt="Before and after tactile balancing showing unstable and stable contact forces.">
+          <figcaption>Before balancing, asymmetric fingertip forces destabilize the interaction. After balancing, tactile feedback reshapes the hand posture into a stable force-balanced configuration.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section method-section" id="method">
+      <div class="section-heading">
+        <p class="eyebrow">Method</p>
+        <h2>From egocentric tracking to force-compliant execution</h2>
+      </div>
+      <div class="method-layout">
+        <div class="tabs" role="tablist" aria-label="Method steps">
+          <button class="tab active" type="button" role="tab" aria-selected="true" data-tab="tracking">1 · Tracking</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-tab="retargeting">2 · Retargeting</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-tab="tactile">3 · Tactile State</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-tab="optimization">4 · QP Balance</button>
+        </div>
+        <div class="tab-panels">
+          <article class="tab-panel active" id="tracking">
+            <h3>Ego-centric perception</h3>
+            <p>A Meta Quest 3 headset captures human hand joints and wrist poses without external motion capture. Human hand states are represented as transformations \(\mathcal{H} = \{\mathbf{T}_1,\dots,\mathbf{T}_M\}, \mathbf{T}_i \in SE(3)\), while wrist motion provides \(\mathbf{T}_w \in SE(3)\).</p>
+          </article>
+          <article class="tab-panel" id="retargeting">
+            <h3>Dexterous hand and arm retargeting</h3>
+            <p>Arm IK maps wrist pose to \( \mathbf{q}_a \), while vector-based hand retargeting maps 26 tracked human hand joints to a 22-DoF dexterous hand. A robust Huber objective and temporal regularization suppress tracking outliers and jitter.</p>
+          </article>
+          <article class="tab-panel" id="tactile">
+            <h3>Contact state estimation</h3>
+            <p>For each active fingertip, tactile sensing estimates contact force \( \mathbf{f}_i^w \) and contact point \( \mathbf{p}_i^w \). A logistic hysteresis weight \(w_i \in [0,1]\) smooths transitions between release, uncertain contact, and reliable contact.</p>
+          </article>
+          <article class="tab-panel" id="optimization">
+            <h3>Force-balanced residual action</h3>
+            <p>The executed command is \( \mathbf{q}_{final}=\mathbf{q}_{tele}+\Delta\mathbf{q} \). A box-constrained QP solves residual joint updates at 30 Hz, combining local fingertip force tracking with object-level force-torque balance.</p>
+          </article>
+        </div>
+      </div>
+      <div class="equation-card">
+        <span>Unified residual objective</span>
+        <div>\[
+          \min_{\Delta \mathbf{q}} \frac{1}{2}\Delta \mathbf{q}^{\top}\mathbf{H}_0\Delta \mathbf{q}
+          + \mathbf{g}_0^{\top}\Delta \mathbf{q}
+          + \lambda_F \|\mathbf{A}_F\Delta \mathbf{q}+\boldsymbol{\rho}_F\|^2
+          + \lambda_{tb}\|\mathbf{A}_{\tau}\Delta \mathbf{q}+\boldsymbol{\rho}_{\tau}\|^2
+        \]</div>
+      </div>
+    </section>
+
+    <section class="section media-section" id="video">
+      <div class="section-heading">
+        <p class="eyebrow">Media</p>
+        <h2>Demos in Sim and Real</h2>
+      </div>
+      <div class="video-shell">
+        <video controls muted playsinline preload="metadata" poster="static/videos/paper/cover.jpg">
+          <source src="static/videos/paper/supplementary.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </section>
+
+    <section class="section results-section" id="results">
+      <div class="section-heading">
+        <p class="eyebrow">Results</p>
+        <h2>Robust contact-rich manipulation across simulation and hardware</h2>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <strong>56</strong>
+          <span>concurrent DoFs across dual UR7e arms and Sharpa Wave hands</span>
+        </div>
+        <div class="stat-card">
+          <strong>97%</strong>
+          <span>Stage 3 success on simulated Ball Assembly with DexTeleop-0</span>
+        </div>
+        <div class="stat-card">
+          <strong>77.14%</strong>
+          <span>Stage 3 completion on real-world Tube Operation</span>
+        </div>
+        <div class="stat-card">
+          <strong>30 Hz</strong>
+          <span>real-time force balance optimization loop</span>
+        </div>
+      </div>
+
+      <section class="result-subsection simreal-subsection" aria-labelledby="simreal-title">
+        <div class="split result-split">
+          <div class="result-copy">
+            <p class="eyebrow">A · Sim-to-Real Alignment</p>
+            <h3 id="simreal-title">A matched digital twin and physical robot make force-aware evaluation consistent.</h3>
+            <p>DexTeleop-0 is evaluated in both NVIDIA IsaacSim and on a physical bimanual dexterous platform. Each branch pairs a 6-DoF UR7e arm with a 22-DoF Sharpa Wave dexterous hand, producing a 56-DoF control problem driven by egocentric Meta Quest 3 tracking. The aligned setup lets the same teleoperated trajectories be replayed under controlled physical variation before deployment on hardware.</p>
+          </div>
+          <figure class="framed-figure result-media">
+            <img src="static/images/paper/sim2real.jpg" alt="Physical and simulated bimanual systems.">
+            <figcaption><strong>Sim-to-real alignment.</strong> Physical hardware and IsaacSim digital twin share the same bimanual arm-hand configuration.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="result-subsection wide-results" aria-labelledby="wide-results-title">
+        <div class="result-copy">
+          <p class="eyebrow">B · Simulation and Real Robot Results</p>
+          <h3 id="wide-results-title">Wide task rollouts shown at readable scale</h3>
+        </div>
+        <figure class="wide-result-item">
+          <img src="static/images/paper/sim_ball.png" alt="Ball assembly simulation snapshots.">
+          <figcaption><strong>Simulation · Ball Assembly.</strong> Dexterous grasping and relocation under randomized object physical parameters.</figcaption>
+        </figure>
+        <figure class="wide-result-item">
+          <img src="static/images/paper/sim_stir.png" alt="Stir in cup simulation snapshots.">
+          <figcaption><strong>Simulation · Stir in Cup.</strong> Bimanual tool use with force-compliant contact during precise stirring trajectories.</figcaption>
+        </figure>
+        <figure class="wide-result-item">
+          <img src="static/images/paper/gear_mesh.png" alt="Real-world gear mesh task snapshots.">
+          <figcaption><strong>Real Robot · Gear Mesh.</strong> Tight-tolerance alignment benefits from tactile residual corrections.</figcaption>
+        </figure>
+        <figure class="wide-result-item">
+          <img src="static/images/paper/peg_insertion.png" alt="Real-world peg insertion task snapshots.">
+          <figcaption><strong>Real Robot · Peg Insertion.</strong> Compliant alignment improves capture and insertion reliability.</figcaption>
+        </figure>
+        <figure class="wide-result-item">
+          <img src="static/images/paper/sorting.png" alt="Real-world food sorting task snapshots.">
+          <figcaption><strong>Real Robot · Food Sorting.</strong> Bimanual force-torque balance supports irregular object handling.</figcaption>
+        </figure>
+        <figure class="wide-result-item">
+          <img src="static/images/paper/tube_operation.png" alt="Real-world tube operation task snapshots.">
+          <figcaption><strong>Real Robot · Tube Operation.</strong> Long-horizon bimanual coordination remains stable through multi-contact shifts.</figcaption>
+        </figure>
+      </section>
+
+      <section class="result-subsection force-profile-section" aria-labelledby="force-profile-title">
+        <div class="result-copy">
+          <p class="eyebrow">C · Force Profile Analysis</p>
+          <h3 id="force-profile-title">Four control variants compared side-by-side</h3>
+        </div>
+        <div class="force-grid">
+          <figure class="force-card">
+            <img src="static/images/paper/ball_baseline_right_thumb_force.jpg" alt="Baseline thumb fingertip tactile force plot.">
+            <figcaption><strong>No Residual.</strong> Position-bound tracking creates large fingertip force spikes.</figcaption>
+          </figure>
+          <figure class="force-card">
+            <img src="static/images/paper/right_thumb_force_tactile.jpg" alt="PD control thumb fingertip tactile force plot.">
+            <figcaption><strong>PD Control.</strong> Local damping reacts to tactile thresholds without global force-torque balance.</figcaption>
+          </figure>
+          <figure class="force-card">
+            <img src="static/images/paper/right_thumb_force_qp.jpg" alt="Force tracking thumb fingertip tactile force plot.">
+            <figcaption><strong>Force Tracking.</strong> Local fingertip force tracking lowers contact load but omits cooperative balance.</figcaption>
+          </figure>
+          <figure class="force-card">
+            <img src="static/images/paper/ball_qpbalance_right_thumb_force.jpg" alt="DexTeleop-0 tactile force components and joint adjustment plot.">
+            <figcaption><strong>DexTeleop-0.</strong> The full residual optimization regulates forces while coordinating joint updates.</figcaption>
+          </figure>
+        </div>
+      </section>
+    </section>
+
+    <section class="section table-section">
+      <div class="section-heading">
+        <p class="eyebrow">Quantitative Highlights</p>
+        <h2>Success rates improve where contact is hardest</h2>
+      </div>
+      <div class="table-grid">
+        <article class="result-table-card">
+          <h3>Simulation</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Scene</th><th>Method</th><th>Final Stage</th><th>Force (N)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Ball Assembly</td><td>No Residual</td><td>4%</td><td>31.58 ± 10.48</td></tr>
+                <tr class="highlight"><td>Ball Assembly</td><td>DexTeleop-0</td><td>97%</td><td>11.15 ± 5.01</td></tr>
+                <tr><td>Stir in Cup</td><td>No Residual</td><td>60%</td><td>15.56 ± 6.59</td></tr>
+                <tr class="highlight"><td>Stir in Cup</td><td>DexTeleop-0</td><td>59%</td><td>7.93 ± 2.67</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+        <article class="result-table-card">
+          <h3>Real Robot</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Task</th><th>Best Baseline</th><th>DexTeleop-0</th><th>Metric</th></tr>
+              </thead>
+              <tbody>
+                <tr class="highlight"><td>Gear Mesh</td><td>42.86%</td><td>57.14%</td><td>Stage 2</td></tr>
+                <tr class="highlight"><td>Peg Insertion</td><td>62.86%</td><td>60.00%</td><td>Stage 2</td></tr>
+                <tr class="highlight"><td>Food Sorting</td><td>57.14%</td><td>74.29%</td><td>Stage 4</td></tr>
+                <tr class="highlight"><td>Tube Operation</td><td>57.14%</td><td>77.14%</td><td>Stage 3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section citation-section" id="citation">
+      <div class="citation-header">
+        <div>
+          <p class="eyebrow">Citation</p>
+          <h2>BibTeX</h2>
+        </div>
+        <button class="copy-bibtex-btn" type="button">
+          <i class="fas fa-copy"></i><span>Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@article{liu2026dexteleop0,
+  title={DexTeleop-0: Force-Aware Bimanual Dexterous Teleoperation with Ego-Centric Perception towards Shared Autonomy},
+  author={Liu, Haichao and Jiang, Yuyao and Park, Hyunsun and Xue, Yuanjiang and Wang, Ziwei},
+  journal={arXiv preprint arXiv:2606.23431},
+  year={2026},
+  url={https://arxiv.org/abs/2606.23431}
+}</code></pre>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Project page for DexTeleop-0. Built from the Academic Project Page Template and adapted for this arXiv release.</p>
+    <p><a href="https://arxiv.org/abs/2606.23431" target="_blank" rel="noopener">arXiv</a> · <a href="mailto:ziwei.wang@ntu.edu.sg">Contact</a></p>
+  </footer>
+</body>
+</html>
