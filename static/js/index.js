@@ -65,6 +65,33 @@ function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+function openFigureModal(src, caption, alt) {
+  const overlay = document.getElementById("figureModal");
+  const image = document.getElementById("figureModalImage");
+  const captionEl = document.getElementById("figureModalCaption");
+
+  if (!overlay || !image || !captionEl) return;
+
+  image.src = src;
+  image.alt = alt || "";
+  captionEl.innerHTML = caption || "";
+  overlay.classList.add("is-open");
+  overlay.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeFigureModal() {
+  const overlay = document.getElementById("figureModal");
+  const image = document.getElementById("figureModalImage");
+  if (!overlay || !image) return;
+
+  overlay.classList.remove("is-open");
+  overlay.setAttribute("aria-hidden", "true");
+  image.removeAttribute("src");
+  image.alt = "";
+  document.body.style.overflow = "";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".tab").forEach((tab) => {
     tab.addEventListener("click", () => setActiveTab(tab));
@@ -86,4 +113,28 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollButton.classList.toggle("visible", window.scrollY > 500);
     });
   }
+
+  document.querySelectorAll(".force-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      const img = card.querySelector("img");
+      const figcaption = card.querySelector("figcaption");
+      const fullSrc = card.dataset.full || (img ? img.src : "");
+      const caption = figcaption ? figcaption.innerHTML : "";
+      const alt = img ? img.alt : "";
+      openFigureModal(fullSrc, caption, alt);
+    });
+  });
+
+  const modal = document.getElementById("figureModal");
+  const closeButton = document.querySelector(".modal-close");
+  if (closeButton) closeButton.addEventListener("click", closeFigureModal);
+  if (modal) {
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeFigureModal();
+    });
+  }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeFigureModal();
+  });
 });

@@ -297,19 +297,19 @@
           <h3 id="force-profile-title">Four control variants compared side-by-side</h3>
         </div>
         <div class="force-grid">
-          <figure class="force-card">
+          <figure class="force-card" data-full="static/images/paper/ball_baseline_right_thumb_force.jpg">
             <img src="static/images/paper/ball_baseline_right_thumb_force.jpg" alt="Baseline thumb fingertip tactile force plot.">
             <figcaption><strong>No Residual.</strong> Position-bound tracking creates large fingertip force spikes.</figcaption>
           </figure>
-          <figure class="force-card">
+          <figure class="force-card" data-full="static/images/paper/right_thumb_force_tactile.jpg">
             <img src="static/images/paper/right_thumb_force_tactile.jpg" alt="PD control thumb fingertip tactile force plot.">
             <figcaption><strong>PD Control.</strong> Local damping reacts to tactile thresholds without global force-torque balance.</figcaption>
           </figure>
-          <figure class="force-card">
+          <figure class="force-card" data-full="static/images/paper/right_thumb_force_qp.jpg">
             <img src="static/images/paper/right_thumb_force_qp.jpg" alt="Force tracking thumb fingertip tactile force plot.">
             <figcaption><strong>Force Tracking.</strong> Local fingertip force tracking lowers contact load but omits cooperative balance.</figcaption>
           </figure>
-          <figure class="force-card">
+          <figure class="force-card" data-full="static/images/paper/ball_qpbalance_right_thumb_force.jpg">
             <img src="static/images/paper/ball_qpbalance_right_thumb_force.jpg" alt="DexTeleop-0 tactile force components and joint adjustment plot.">
             <figcaption><strong>DexTeleop-0.</strong> The full residual optimization regulates forces while coordinating joint updates.</figcaption>
           </figure>
@@ -355,6 +355,7 @@
             </table>
           </div>
         </article>
+        <p class="results-footnote">For fuller quantitative breakdowns and extended analysis, please refer to the <a href="https://arxiv.org/abs/2606.23431" target="_blank" rel="noopener">arXiv paper</a>.</p>
       </div>
     </section>
 
@@ -382,5 +383,15 @@
     <p>Project page for DexTeleop-0. Built from the Academic Project Page Template and adapted for this arXiv release.</p>
     <p><a href="https://arxiv.org/abs/2606.23431" target="_blank" rel="noopener">arXiv</a> · <a href="mailto:ziwei.wang@ntu.edu.sg">Contact</a></p>
   </footer>
+
+  <div class="modal-overlay" id="figureModal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="figureModalCaption">
+      <button class="modal-close" type="button" aria-label="Close figure preview">
+        <i class="fas fa-times"></i>
+      </button>
+      <img id="figureModalImage" alt="">
+      <div class="modal-caption" id="figureModalCaption"></div>
+    </div>
+  </div>
 </body>
 </html>
