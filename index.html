@@ -110,13 +110,26 @@
       </div>
     </section>
 
-    <figure class="hero-media">
-      <img src="static/images/paper/fig2_refine.jpg" alt="DexTeleop-0 system architecture with egocentric perception, retargeting, tactile force balance, and robot execution." fetchpriority="high">
-      <figcaption>DexTeleop-0 turns egocentric tracking into force-aware robot actions through real-time tactile residual optimization.</figcaption>
-    </figure>
   </header>
 
   <main id="main">
+    <section class="section media-section" id="video">
+      <div class="section-heading">
+        <p class="eyebrow">Media</p>
+        <h2>IsaacSim + Hardware Demo</h2>
+      </div>
+      <div class="video-shell">
+        <video controls muted playsinline preload="metadata" poster="static/videos/paper/cover.jpg">
+          <source src="static/videos/paper/supplementary.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="media-description">
+          <h3>Simulation and real-world dexterous manipulation demos</h3>
+          <p>The video shows the high-DoF dexterous hand operating in IsaacSim and on the real bimanual robot platform. It highlights egocentric tracking, retargeting, and tactile residual control across contact-rich tasks, with the simulation segment illustrating controlled behavior under repeatable conditions and the hardware segment showing the same pipeline deployed on the physical system.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="section abstract-section" id="abstract">
       <div class="section-heading">
         <p class="eyebrow">Overview</p>
@@ -126,29 +139,29 @@
         <div class="abstract-copy">
           <p>Fine-grained, bimanual dexterous manipulation remains a foundational challenge in robotics. Traditional teleoperation systems often fail in contact-rich tasks because embodiment gaps hinder accurate kinematic mapping, while tactile and force feedback remain absent. DexTeleop-0 introduces a tactile-driven adaptation strategy that translates coarse human tracking intents into precise, force-compliant robotic commands with tactile sensing.</p>
           <p>By estimating contact points and leveraging a tactile-enabled fingertip force-sensing profile, the system dynamically computes localized corrections using operational space Jacobians. Across simulation and real-world hardware, DexTeleop-0 improves task success rates and execution efficiency in robust grasping, disturbance-resilient manipulation, and complex dexterous tasks.</p>
+          <div class="abstract-keywords" aria-label="Key concepts">
+            <article class="abstract-keyword">
+              <i class="fas fa-hand-paper"></i>
+              <h3>Tactile Shared Autonomy</h3>
+            </article>
+            <article class="abstract-keyword">
+              <i class="fas fa-wave-square"></i>
+              <h3>Contact-Rich Modeling</h3>
+            </article>
+            <article class="abstract-keyword">
+              <i class="fas fa-vr-cardboard"></i>
+              <h3>Egocentric Teleoperation</h3>
+            </article>
+            <article class="abstract-keyword">
+              <i class="fas fa-chart-line"></i>
+              <h3>Sim and Real Validation</h3>
+            </article>
+          </div>
         </div>
-        <div class="contribution-grid" aria-label="Key contributions">
-          <article>
-            <i class="fas fa-hand-paper"></i>
-            <h3>Tactile Shared Autonomy</h3>
-            <p>Force-aware adaptation explicitly bridges the control and interaction gap during physical contact.</p>
-          </article>
-          <article>
-            <i class="fas fa-wave-square"></i>
-            <h3>Contact-Rich Modeling</h3>
-            <p>Visual-tactile feedback is closed through contact force sensing and predictive interaction modeling.</p>
-          </article>
-          <article>
-            <i class="fas fa-vr-cardboard"></i>
-            <h3>Egocentric Teleoperation</h3>
-            <p>A lightweight, hardware-agnostic stack maps VR hand and wrist tracking into coordinated bimanual commands.</p>
-          </article>
-          <article>
-            <i class="fas fa-chart-line"></i>
-            <h3>Sim and Real Validation</h3>
-            <p>The full-stack system is validated on aligned IsaacSim and physical dual-arm dexterous platforms.</p>
-          </article>
-        </div>
+        <figure class="abstract-media">
+          <img src="static/images/paper/fig2_refine.jpg" alt="DexTeleop-0 system architecture with egocentric perception, retargeting, tactile force balance, and robot execution." fetchpriority="high">
+          <figcaption>DexTeleop-0 turns egocentric tracking into force-aware robot actions through real-time tactile residual optimization.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -205,19 +218,6 @@
           + \lambda_F \|\mathbf{A}_F\Delta \mathbf{q}+\boldsymbol{\rho}_F\|^2
           + \lambda_{tb}\|\mathbf{A}_{\tau}\Delta \mathbf{q}+\boldsymbol{\rho}_{\tau}\|^2
         \]</div>
-      </div>
-    </section>
-
-    <section class="section media-section" id="video">
-      <div class="section-heading">
-        <p class="eyebrow">Media</p>
-        <h2>Demos in Sim and Real</h2>
-      </div>
-      <div class="video-shell">
-        <video controls muted playsinline preload="metadata" poster="static/videos/paper/cover.jpg">
-          <source src="static/videos/paper/supplementary.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
       </div>
     </section>
 
