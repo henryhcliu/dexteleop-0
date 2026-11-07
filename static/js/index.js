@@ -1,140 +1,90 @@
-function setActiveTab(button) {
-  const targetId = button.dataset.tab;
-  const tabGroup = button.closest(".method-layout");
-
-  tabGroup.querySelectorAll(".tab").forEach((tab) => {
-    const isActive = tab === button;
-    tab.classList.toggle("active", isActive);
-    tab.setAttribute("aria-selected", String(isActive));
-  });
-
-  tabGroup.querySelectorAll(".tab-panel").forEach((panel) => {
-    panel.classList.toggle("active", panel.id === targetId);
-  });
-}
-
-function filterGallery(button) {
-  const filter = button.dataset.filter;
-
-  document.querySelectorAll(".gallery-filter").forEach((filterButton) => {
-    filterButton.classList.toggle("active", filterButton === button);
-  });
-
-  document.querySelectorAll(".gallery-item").forEach((item) => {
-    const visible = filter === "all" || item.dataset.category === filter;
-    item.hidden = !visible;
-  });
-}
-
-function copyBibTeX() {
-  const bibtex = document.getElementById("bibtex-code");
-  const button = document.querySelector(".copy-bibtex-btn");
-  const label = button.querySelector("span");
-  const text = bibtex ? bibtex.textContent.trim() : "";
-
-  const markCopied = () => {
-    button.classList.add("copied");
-    label.textContent = "Copied";
-    window.setTimeout(() => {
-      button.classList.remove("copied");
-      label.textContent = "Copy";
-    }, 1800);
-  };
-
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(text).then(markCopied).catch(() => fallbackCopy(text, markCopied));
-  } else {
-    fallbackCopy(text, markCopied);
+/* Progressive enhancement: all research content is available without JavaScript. */
+(() => {
+  'use strict';
+  const tabs = document.querySelector('.demo-tabs');
+  if (tabs) {
+    const buttons = [...tabs.querySelectorAll('button[data-panel]')];
+    const panels = buttons.map(button => document.getElementById(button.dataset.panel));
+    if (buttons.length && panels.every(Boolean)) {
+      tabs.setAttribute('role', 'tablist');
+      tabs.classList.add('enhanced');
+      const activate = (index, moveFocus = false) => {
+        buttons.forEach((button, i) => {
+          const selected = index === i;
+          button.setAttribute('aria-selected', String(selected));
+          button.tabIndex = selected ? 0 : -1;
+          panels[i].hidden = !selected;
+        });
+        if (moveFocus) buttons[index].focus();
+      };
+      buttons.forEach((button, index) => {
+        button.setAttribute('role', 'tab');
+        button.setAttribute('aria-controls', panels[index].id);
+        panels[index].setAttribute('role', 'tabpanel');
+        panels[index].setAttribute('aria-labelledby', button.id);
+        panels[index].tabIndex = 0;
+        button.addEventListener('click', () => activate(index));
+        button.addEventListener('keydown', event => {
+          let next;
+          if (event.key === 'ArrowRight') next = (index + 1) % buttons.length;
+          if (event.key === 'ArrowLeft') next = (index + buttons.length - 1) % buttons.length;
+          if (event.key === 'Home') next = 0;
+          if (event.key === 'End') next = buttons.length - 1;
+          if (next !== undefined) {
+            event.preventDefault();
+            activate(next, true);
+          }
+        });
+      });
+      activate(0);
+    }
   }
-}
-
-function fallbackCopy(text, callback) {
-  const textarea = document.createElement("textarea");
-  textarea.value = text;
-  textarea.setAttribute("readonly", "");
-  textarea.style.position = "absolute";
-  textarea.style.left = "-9999px";
-  document.body.appendChild(textarea);
-  textarea.select();
-  document.execCommand("copy");
-  document.body.removeChild(textarea);
-  callback();
-}
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function openFigureModal(src, caption, alt) {
-  const overlay = document.getElementById("figureModal");
-  const image = document.getElementById("figureModalImage");
-  const captionEl = document.getElementById("figureModalCaption");
-
-  if (!overlay || !image || !captionEl) return;
-
-  image.src = src;
-  image.alt = alt || "";
-  captionEl.innerHTML = caption || "";
-  overlay.classList.add("is-open");
-  overlay.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-}
-
-function closeFigureModal() {
-  const overlay = document.getElementById("figureModal");
-  const image = document.getElementById("figureModalImage");
-  if (!overlay || !image) return;
-
-  overlay.classList.remove("is-open");
-  overlay.setAttribute("aria-hidden", "true");
-  image.removeAttribute("src");
-  image.alt = "";
-  document.body.style.overflow = "";
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".tab").forEach((tab) => {
-    tab.addEventListener("click", () => setActiveTab(tab));
-  });
-
-  document.querySelectorAll(".gallery-filter").forEach((button) => {
-    button.addEventListener("click", () => filterGallery(button));
-  });
-
-  const copyButton = document.querySelector(".copy-bibtex-btn");
-  if (copyButton) {
-    copyButton.addEventListener("click", copyBibTeX);
-  }
-
-  const scrollButton = document.querySelector(".scroll-to-top");
-  if (scrollButton) {
-    scrollButton.addEventListener("click", scrollToTop);
-    window.addEventListener("scroll", () => {
-      scrollButton.classList.toggle("visible", window.scrollY > 500);
+  const copyButton = document.getElementById('copy-bibtex');
+  const citation = document.getElementById('bibtex-code');
+  const copyStatus = document.getElementById('copy-status');
+  if (copyButton && citation && copyStatus) {
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(citation.textContent);
+        copyButton.textContent = 'Copied';
+        copyStatus.textContent = 'BibTeX copied to clipboard.';
+      } catch {
+        const selection = window.getSelection();
+        if (selection) {
+          const range = document.createRange();
+          range.selectNodeContents(citation);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+        copyStatus.textContent = 'Citation selected. Copy the text or use Download .bib.';
+      }
     });
   }
-
-  document.querySelectorAll(".force-card").forEach((card) => {
-    card.addEventListener("click", () => {
-      const img = card.querySelector("img");
-      const figcaption = card.querySelector("figcaption");
-      const fullSrc = card.dataset.full || (img ? img.src : "");
-      const caption = figcaption ? figcaption.innerHTML : "";
-      const alt = img ? img.alt : "";
-      openFigureModal(fullSrc, caption, alt);
-    });
-  });
-
-  const modal = document.getElementById("figureModal");
-  const closeButton = document.querySelector(".modal-close");
-  if (closeButton) closeButton.addEventListener("click", closeFigureModal);
-  if (modal) {
-    modal.addEventListener("click", (event) => {
-      if (event.target === modal) closeFigureModal();
-    });
+  if ('IntersectionObserver' in window) {
+    const links = [...document.querySelectorAll('nav a[href^="#"]')];
+    const sections = links.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        links.forEach(link => {
+          if (link.getAttribute('href') === `#${entry.target.id}`) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+      });
+    }, { rootMargin: '-15% 0px -65% 0px' });
+    sections.forEach(section => observer.observe(section));
   }
+})();
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeFigureModal();
+// Make supplemental analysis printable, then restore the visitor's disclosure state.
+(() => {
+  let openedForPrint = [];
+  window.addEventListener('beforeprint', () => {
+    openedForPrint = [...document.querySelectorAll('details:not([open])')];
+    openedForPrint.forEach(detail => { detail.open = true; });
   });
-});
+  window.addEventListener('afterprint', () => {
+    openedForPrint.forEach(detail => { detail.open = false; });
+    openedForPrint = [];
+  });
+})();

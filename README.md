@@ -1,80 +1,54 @@
-# Academic Project Page Template
+# DexTeleop-0 project website
 
-> **Update (September 2025)**: This template has been modernized with better design, SEO, and mobile support. For the original version, see the [original-version branch](https://github.com/eliahuhorwitz/Academic-project-page-template/tree/original-version).
+**DexTeleop-0: Force-Aware Bimanual Dexterous Teleoperation with Ego-Centric Perception towards Shared Autonomy**
 
-A clean, responsive template for academic project pages.
+Buildless HTML/CSS/JavaScript served from the repository root by the existing GitHub Pages setup. `.nojekyll` is preserved. No build step, package installation, external font service, MathJax, or runtime access to another local folder is required.
 
+## Local review
 
-Example project pages built using this template are:
-- https://horwitz.ai/probex
-- https://vision.huji.ac.il/probegen
-- https://horwitz.ai/mother
-- https://horwitz.ai/spectral_detuning
-- https://vision.huji.ac.il/ladeda
-- https://vision.huji.ac.il/dsire
-- https://horwitz.ai/podd
-- https://dreamix-video-editing.github.io
-- https://horwitz.ai/conffusion
-- https://horwitz.ai/3d_ads/
-- https://vision.huji.ac.il/ssrl_ad
-- https://vision.huji.ac.il/deepsim
+From this repository, run:
 
+```powershell
+python -m http.server 8000 --bind 127.0.0.1
+```
 
+Open <http://127.0.0.1:8000/>. Stop the server with Ctrl+C. GitHub Pages uses the base path `/dexteleop-0/`; rendered media paths are relative to the page. Canonical and social-image metadata use the corresponding deployed project URL.
 
-## Start using the template
-To start using the template click on `Use this Template`.
+## Structure
 
-The template uses html for controlling the content and css for controlling the style. 
-To edit the websites contents edit the `index.html` file. It contains different HTML "building blocks", use whichever ones you need and comment out the rest.  
+- `index.html`: current title/authors, top Paper/arXiv/Code controls, overview, method, demonstration tabs, experimental findings, and citation.
+- `static/css/index.css`: UniManip-aligned typography, colors, spacing, responsive layouts, and paper-specific figure widths.
+- `static/js/index.js`: keyboard-accessible demonstration tabs, citation copying with fallback, and section-navigation state. Research content remains available without JavaScript.
+- `static/images/paper/*.webp`: optimized manuscript figures with declared intrinsic sizes and alt text.
+- `static/figures/*.pdf`: original full-resolution figure PDFs.
+- `static/videos/webpage_v1.1_compressed.mp4`: complete supplied 2:49.51 presentation, 1920 x 1080, 30fps, H.264 High/yuv420p with AAC stereo. Lossless stream-copy remux enables faststart; video and audio stream hashes match the supplied file. Size: 48,920,796 bytes (46.65 MiB).
+- `static/images/video-poster-v1.1.webp` and `social-preview-v1.1.jpg`: repository-local poster and 1200 x 630 sharing preview extracted from the current video title frame. Versioned filenames avoid stale cached covers.
+- `static/dexteleop-0.bib`: downloadable citation matching the inline BibTeX.
+- `.gitattributes`: binary media rules that preserve PDF/image/video bytes despite Windows Git line-ending settings.
 
-**IMPORTANT!** Make sure to replace the `favicon.ico` under `static/images/` with one of your own, otherwise your favicon is going to be a dreambooth image of me.
+The architecture diagram is centered at a maximum width of 720 px. Larger task and result figures are capped at 896 px and shrink with their containers. PDF links retain access to detailed labels on small screens.
 
-## What's New
+## Scientific and bibliographic provenance
 
-- Modern, clean design with better mobile support
-- Improved SEO with proper meta tags and structured data
-- Performance improvements (lazy loading, optimized assets)
-- More Works dropdown
-- Copy button for BibTeX citations
-- Better accessibility
+The page follows the supplied `main_r1_black.tex` manuscript and its included controller and data tables. It distinguishes independent hand residuals from nominal arm commands, soft contact-moment regularization from equilibrium constraints, direct Sharpa sensing from empirical Wuji normal-force estimation, and final-stage success from whole-task completion.
 
-## Components
+The seven-author order is corroborated by the manuscript's commented author block and the supplied video's title frame: Haichao Liu, Yuyao Jiang, Hyunsun Park, Yuanjiang Xue, Mingze Sun, Ziwei Liu, Ziwei Wang. The user confirmed that Mingze Sun and Ziwei Liu are at NTU. Institutional affiliations are NTU, Singapore for all except Hyunsun Park (OOJU, USA); Ziwei Wang is the corresponding author.
 
-- Teaser video
-- Image carousel
-- YouTube video embedding
-- Video carousel
-- PDF poster viewer
-- BibTeX citation
+The [available arXiv record](https://arxiv.org/abs/2606.23431) was checked on 8 November 2026. It confirms the title, identifier, original publication date, subject, and DOI, but currently lists the original five authors. The current seven-author manuscript is not yet online there. Paper/arXiv links point to the available record without an invented v2 URL; the page and citation use the confirmed current author list. No journal acceptance or publication venue is asserted.
 
-## Customization
+Code remains marked coming soon. No public research-implementation URL or timed-caption file was supplied.
 
-The HTML file has TODO comments showing what to replace:
+## Verification and review limits
 
-- Paper title, authors, institution, conference
-- Links (arXiv, GitHub, etc.)
-- Abstract and descriptions  
-- Videos, images, and PDFs
-- Related works in the dropdown
-- Meta tags for SEO and social sharing
+- Scientific review checked selected numerical results and denominators against the manuscript's simulation, hardware, and user-study tables, including the novice Peg Insertion exception and final-stage/full-task distinction.
+- Checked HTML structure, unique anchors, local references, image dimensions/decoding, CSS syntax, citation consistency, and media size. Original figure PDFs and staged Git blobs match source hashes.
+- Exported current working contents from Git-tracked paths into an isolated directory and served `/dexteleop-0/`. The page and all 28 local resources returned HTTP 200 with correct sizes and media types; served HTML/CSS/JS/BibTeX bytes matched the export.
+- Complete deployment contents are approximately 70.1 MB. Every file is below 50 MiB; the largest is the 46.65 MiB video. The existing GitHub Pages size constraints are respected without Git LFS or external media hosting.
+- The complete repository-local video and audio decode without errors; lossless remux stream hashes match the supplied original, with `moov` before `mdat` for faststart.
+- Source-level interaction checks cover tab initialization, click and keyboard selection, focus management, copying, and the clipboard-denial fallback.
+- Browser visual QA is blocked: Windows Computer Use could not determine the active browser URL confidently and stopped. Rendered desktop/mobile layout, native controls, seeking, and playback remain unverified in a browser.
+- Paper/arXiv targets were checked against the available arXiv record; there is no online v2 to validate. External endpoint availability can be limited by the browsing environment.
 
-### Meta Tags
-The template includes meta tags for better search engine visibility and social media sharing. These appear in the `<head>` section and help with:
-- Google Scholar indexing
-- Social media previews (Twitter, Facebook, LinkedIn)
-- Search engine optimization
+Media and citation files are staged in Git for review. The site stays within the existing static deployment conventions. No commit, push, publication, or hosting change is performed by this update.
 
-Create a 1200x630px social preview image at `static/images/social_preview.png`.
-
-## Tips
-
-- Compress images with [TinyPNG](https://tinypng.com)
-- Use YouTube for large videos (>10MB)  
-- Replace the favicon in `static/images/`
-- Works with GitHub Pages
-
-## Acknowledgments
-Parts of this project page were adopted from the [Nerfies](https://nerfies.github.io/) page.
-
-## Website License
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+Original template credit is retained in the footer. Unused vendor scripts/styles are not loaded by the page.

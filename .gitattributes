@@ -1,0 +1,8 @@
+﻿# Preserve media bytes across Windows checkouts and GitHub Pages deployments.
+*.pdf binary
+*.mp4 binary
+*.webp binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
